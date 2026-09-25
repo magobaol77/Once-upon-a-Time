@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Once Upon a Time</title>
+    <link rel="stylesheet" href="styles.css?v=layout2" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div>
+          <h1>Once Upon a Time</h1>
+          <p id="phaseText">Prepara la partita e scegli una Carta Azione.</p>
+        </div>
+        <div class="stats" id="stats"></div>
+      </header>
+
+      <section class="player-bar">
+        <div class="controls">
+          <button id="newGameBtn" type="button">Nuova partita</button>
+          <button id="resolveActionBtn" class="hidden" type="button" disabled>4. Risolvi effetto Carta Azione</button>
+          <button id="endRoundBtn" type="button" disabled>Fine round</button>
+          <button id="scoreBtn" type="button">Calcola punteggio</button>
+        </div>
+        <div id="tableauSummary" class="summary-grid" aria-label="Riepilogo icone e carte"></div>
+      </section>
+
+      <section class="layout">
+        <aside class="panel left-panel">
+          <h2>1. Gioca Carta Azione</h2>
+          <div id="actionHand" class="action-hand"></div>
+          <h2>Display Quest</h2>
+          <div id="questDisplay" class="stack"></div>
+          <h2>3. Acquista 1 Oggetto <span class="optional-label">(opzionale)</span></h2>
+          <div id="itemDisplay" class="stack"></div>
+        </aside>
+
+        <section class="board">
+          <div class="round-strip">
+            <div>
+              <span class="label">Tu</span>
+              <strong id="playerAction">-</strong>
+            </div>
+            <div>
+              <span class="label">Avversario</span>
+              <strong id="botAction">-</strong>
+            </div>
+            <div>
+              <span class="label">Stato</span>
+              <strong id="roundState">Scegli azione</strong>
+            </div>
+          </div>
+
+          <h2>2. Scegli e acquisisci un Gruppo</h2>
+          <div id="groups" class="groups"></div>
+
+          <h2>Log</h2>
+          <div id="log" class="log"></div>
+        </section>
+
+        <aside class="panel right-panel">
+          <h2>Scrittore</h2>
+          <div id="writerPanel"></div>
+          <h2>Tableau</h2>
+          <div id="tableau" class="tableau"></div>
+        </aside>
+      </section>
+
+      <section id="scorePanel" class="score-panel hidden"></section>
+
+      <section id="writerSetup" class="writer-setup hidden" aria-modal="true" role="dialog">
+        <div class="writer-setup-content">
+          <h2 id="writerSetupTitle">Inizia partita</h2>
+          <div id="writerChoices" class="writer-choice-grid"></div>
+        </div>
+      </section>
+      <section id="deckCatalog" class="deck-catalog hidden" aria-modal="true" role="dialog" aria-label="Catalogo mazzi">
+        <div class="deck-catalog-content">
+          <div class="deck-catalog-header">
+            <h2 id="deckCatalogTitle">Mazzi</h2>
+            <button id="closeCatalogBtn" type="button">Torna al menu</button>
+          </div>
+          <nav id="deckCatalogTabs" class="deck-catalog-tabs" aria-label="Scegli mazzo"></nav>
+          <div id="deckCatalogCards" class="deck-catalog-cards"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="game-data.js?v=layout2"></script>
+    <script src="app.js?v=layout2"></script>
+  </body>
+</html>
