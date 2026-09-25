@@ -1,58 +1,58 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Once Upon a Time</title>
-    <link rel="stylesheet" href="styles.css?v=layout2" />
+    <link rel="stylesheet" href="styles.css?v=english2" />
   </head>
   <body>
     <main class="app">
       <header class="topbar">
         <div>
           <h1>Once Upon a Time</h1>
-          <p id="phaseText">Prepara la partita e scegli una Carta Azione.</p>
+          <p id="phaseText">Set up the game and choose an Action card.</p>
         </div>
         <div class="stats" id="stats"></div>
       </header>
 
       <section class="player-bar">
         <div class="controls">
-          <button id="newGameBtn" type="button">Nuova partita</button>
-          <button id="resolveActionBtn" class="hidden" type="button" disabled>4. Risolvi effetto Carta Azione</button>
-          <button id="endRoundBtn" type="button" disabled>Fine round</button>
-          <button id="scoreBtn" type="button">Calcola punteggio</button>
+          <button id="newGameBtn" type="button">New game</button>
+          <button id="resolveActionBtn" class="hidden" type="button" disabled>4. Resolve Action card effect</button>
+          <button id="endRoundBtn" type="button" disabled>End round</button>
+          <button id="scoreBtn" type="button">Calculate score</button>
         </div>
-        <div id="tableauSummary" class="summary-grid" aria-label="Riepilogo icone e carte"></div>
+        <div id="tableauSummary" class="summary-grid" aria-label="Icon and card summary"></div>
       </section>
 
       <section class="layout">
         <aside class="panel left-panel">
-          <h2>1. Gioca Carta Azione</h2>
+          <h2>1. Play an Action card</h2>
           <div id="actionHand" class="action-hand"></div>
           <h2>Display Quest</h2>
           <div id="questDisplay" class="stack"></div>
-          <h2>3. Acquista 1 Oggetto <span class="optional-label">(opzionale)</span></h2>
+          <h2>3. Buy 1 Item <span class="optional-label">(optional)</span></h2>
           <div id="itemDisplay" class="stack"></div>
         </aside>
 
         <section class="board">
           <div class="round-strip">
             <div>
-              <span class="label">Tu</span>
+              <span class="label">You</span>
               <strong id="playerAction">-</strong>
             </div>
             <div>
-              <span class="label">Avversario</span>
+              <span class="label">Opponent</span>
               <strong id="botAction">-</strong>
             </div>
             <div>
-              <span class="label">Stato</span>
-              <strong id="roundState">Scegli azione</strong>
+              <span class="label">Status</span>
+              <strong id="roundState">Choose Action</strong>
             </div>
           </div>
 
-          <h2>2. Scegli e acquisisci un Gruppo</h2>
+          <h2>2. Choose and take a Group</h2>
           <div id="groups" class="groups"></div>
 
           <h2>Log</h2>
@@ -60,7 +60,7 @@
         </section>
 
         <aside class="panel right-panel">
-          <h2>Scrittore</h2>
+          <h2>Writer</h2>
           <div id="writerPanel"></div>
           <h2>Tableau</h2>
           <div id="tableau" class="tableau"></div>
@@ -71,23 +71,23 @@
 
       <section id="writerSetup" class="writer-setup hidden" aria-modal="true" role="dialog">
         <div class="writer-setup-content">
-          <h2 id="writerSetupTitle">Inizia partita</h2>
+          <h2 id="writerSetupTitle">Start game</h2>
           <div id="writerChoices" class="writer-choice-grid"></div>
         </div>
       </section>
       <section id="deckCatalog" class="deck-catalog hidden" aria-modal="true" role="dialog" aria-label="Catalogo mazzi">
         <div class="deck-catalog-content">
           <div class="deck-catalog-header">
-            <h2 id="deckCatalogTitle">Mazzi</h2>
-            <button id="closeCatalogBtn" type="button">Torna al menu</button>
+            <h2 id="deckCatalogTitle">Decks</h2>
+            <button id="closeCatalogBtn" type="button">Back to menu</button>
           </div>
-          <nav id="deckCatalogTabs" class="deck-catalog-tabs" aria-label="Scegli mazzo"></nav>
+          <nav id="deckCatalogTabs" class="deck-catalog-tabs" aria-label="Choose deck"></nav>
           <div id="deckCatalogCards" class="deck-catalog-cards"></div>
         </div>
       </section>
     </main>
 
-    <script src="game-data.js?v=layout2"></script>
-    <script src="app.js?v=layout2"></script>
+    <script src="game-data.js?v=english2"></script>
+    <script src="app.js?v=english2"></script>
   </body>
 </html>

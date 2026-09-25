@@ -1298,216 +1298,216 @@ window.GAME_DATA = {
     {
       "id": "Q1",
       "number": 1,
-      "name": "Il Ballo di Mezzanotte",
-      "theme": "Cenerentola",
-      "scoring": "2 PV per ogni icona Charm. Max 14 PV."
+      "name": "The Midnight Ball",
+      "theme": "Cinderella",
+      "scoring": "2 VP for each Charm icon. Max 14 VP."
     },
     {
       "id": "Q2",
       "number": 2,
-      "name": "Il Duello con Uncino",
+      "name": "The Duel with Hook",
       "theme": "Peter Pan",
-      "scoring": "2 PV per ogni icona Strength. Max 14 PV."
+      "scoring": "2 VP for each Strength icon. Max 14 VP."
     },
     {
       "id": "Q3",
       "number": 3,
-      "name": "Giù nella Tana",
+      "name": "Down the Rabbit Hole",
       "theme": "Alice",
-      "scoring": "2 PV per ogni icona Dexterity. Max 14 PV."
+      "scoring": "2 VP for each Dexterity icon. Max 14 VP."
     },
     {
       "id": "Q4",
       "number": 4,
-      "name": "La Voce Perduta",
-      "theme": "Sirenetta",
-      "scoring": "2 PV per ogni icona Intelligence. Max 14 PV."
+      "name": "The Lost Voice",
+      "theme": "The Little Mermaid",
+      "scoring": "2 VP for each Intelligence icon. Max 14 VP."
     },
     {
       "id": "Q5",
       "number": 5,
-      "name": "La Scarpetta Ritrovata",
-      "theme": "Cenerentola",
-      "scoring": "5 PV per ogni set completo di 4 icone diverse. Max 15 PV."
+      "name": "The Glass Slipper Found",
+      "theme": "Cinderella",
+      "scoring": "5 VP for each complete set of 4 different icons. Max 15 VP."
     },
     {
       "id": "Q6",
       "number": 6,
-      "name": "L’Isola Che Non C’è",
+      "name": "Neverland",
       "theme": "Peter Pan",
-      "scoring": "12 PV se hai almeno 3 icone per ciascun tipo. Altrimenti 8 PV se ne hai almeno 2 per ciascun tipo."
+      "scoring": "12 VP if you have at least 3 icons of each type. Otherwise, 8 VP if you have at least 2 of each type."
     },
     {
       "id": "Q7",
       "number": 7,
-      "name": "Il Morso della Mela",
-      "theme": "Biancaneve",
-      "scoring": "2 PV per ogni carta Bad. Max 14 PV."
+      "name": "The Apple's Bite",
+      "theme": "Snow White",
+      "scoring": "2 VP for each Bad card. Max 14 VP."
     },
     {
       "id": "Q8",
       "number": 8,
-      "name": "Risveglio nel Bosco",
-      "theme": "Biancaneve",
-      "scoring": "1 PV per ogni carta Good. Max 12 PV."
+      "name": "Forest Awakening",
+      "theme": "Snow White",
+      "scoring": "1 VP for each Good card. Max 12 VP."
     },
     {
       "id": "Q9",
       "number": 9,
-      "name": "La Regina Ordina",
+      "name": "The Queen's Command",
       "theme": "Alice",
-      "scoring": "3 PV per ogni carta Neutral. Max 15 PV."
+      "scoring": "3 VP for each Neutral card. Max 15 VP."
     },
     {
       "id": "Q10",
       "number": 10,
-      "name": "La Casa dei Sette",
-      "theme": "Biancaneve",
-      "scoring": "1 PV per ogni Character. Max 12 PV."
+      "name": "The House of Seven",
+      "theme": "Snow White",
+      "scoring": "1 VP for each Character. Max 12 VP."
     },
     {
       "id": "Q11",
       "number": 11,
-      "name": "Il Tridente del Re",
-      "theme": "Sirenetta",
-      "scoring": "2 PV per ogni Item. Max 14 PV."
+      "name": "The King's Trident",
+      "theme": "The Little Mermaid",
+      "scoring": "2 VP for each Item. Max 14 VP."
     },
     {
       "id": "Q12",
       "number": 12,
-      "name": "Il Tè del Cappellaio",
+      "name": "The Hatter's Tea Party",
       "theme": "Alice",
-      "scoring": "3 PV per ogni carta con effetto Ongoing. Max 15 PV."
+      "scoring": "3 VP for each card with an Ongoing effect. Max 15 VP."
     },
     {
       "id": "Q13",
       "number": 13,
-      "name": "Seconda Stella a Destra",
+      "name": "Second Star to the Right",
       "theme": "Peter Pan",
-      "scoring": "2 PV per ogni carta con effetto Activation. Max 14 PV."
+      "scoring": "2 VP for each card with an Activation effect. Max 14 VP."
     },
     {
       "id": "Q14",
       "number": 14,
-      "name": "Il Patto con la Bestia",
-      "theme": "Bella e Bestia",
-      "scoring": "5 PV per ogni Legendary potenziata. Max 15 PV."
+      "name": "The Pact with the Beast",
+      "theme": "Beauty and the Beast",
+      "scoring": "5 VP for each upgraded Legendary card. Max 15 VP."
     },
     {
       "id": "Q15",
       "number": 15,
-      "name": "La Rosa Incantata",
-      "theme": "Bella e Bestia",
-      "scoring": "3 PV per ogni carta che ti ha fatto spendere meno XP o potenziare gratis. Max 15 PV."
+      "name": "The Enchanted Rose",
+      "theme": "Beauty and the Beast",
+      "scoring": "3 VP for each card that reduced an XP cost or granted a free upgrade. Max 15 VP."
     },
     {
       "id": "Q16",
       "number": 16,
-      "name": "Rubare ai Ricchi",
+      "name": "Rob the Rich",
       "theme": "Robin Hood",
-      "scoring": "1 PV ogni 2 monete rimaste. Max 12 PV."
+      "scoring": "1 VP for every 2 coins remaining. Max 12 VP."
     },
     {
       "id": "Q17",
       "number": 17,
-      "name": "La Lampada Strofinata",
-      "theme": "Aladino",
-      "scoring": "1 PV ogni 2 XP rimasti. Max 12 PV."
+      "name": "The Rubbed Lamp",
+      "theme": "Aladdin",
+      "scoring": "1 VP for every 2 XP remaining. Max 12 VP."
     },
     {
       "id": "Q18",
       "number": 18,
-      "name": "Freccia nel Bersaglio",
+      "name": "Arrow on Target",
       "theme": "Robin Hood",
-      "scoring": "3 PV per ogni carta che dà PV direttamente o a fine partita. Max 15 PV."
+      "scoring": "3 VP for each card that grants VP directly or at Game End. Max 15 VP."
     },
     {
       "id": "Q19",
       "number": 19,
-      "name": "Il Desiderio Finale",
-      "theme": "Aladino",
-      "scoring": "5 PV per ogni altra Quest completata. Max 15 PV."
+      "name": "The Final Wish",
+      "theme": "Aladdin",
+      "scoring": "5 VP for each other completed Quest. Max 15 VP."
     },
     {
       "id": "Q20",
       "number": 20,
-      "name": "C’era una Volta",
-      "theme": "Finale corale",
-      "scoring": "3 PV per ogni categoria in cui hai almeno 3 carte: Good, Bad, Character, Item, Activation. Max 15 PV."
+      "name": "Once Upon a Time",
+      "theme": "Ensemble Finale",
+      "scoring": "3 VP for each category in which you have at least 3 cards: Good, Bad, Character, Item, Activation. Max 15 VP."
     }
   ],
   "writers": [
     {
       "id": "W1",
       "name": "Charles Perrault",
-      "level1": "Il primo Oggetto acquistato nel round costa 1 moneta in meno.",
+      "level1": "The first Item you buy each round costs 1 fewer coin.",
       "cost2": 2,
-      "level2": "Acquista immediatamente un Oggetto pagando 2 monete in meno.",
+      "level2": "Immediately buy an Item for 2 fewer coins.",
       "cost3": 4,
-      "level3": "2 PV per ogni Oggetto. Massimo 14 PV."
+      "level3": "2 VP for each Item. Maximum 14 VP."
     },
     {
       "id": "W2",
-      "name": "Fratelli Grimm",
-      "level1": "La prima volta nel round che prendi un Good o un Bad, ottieni 1 moneta.",
+      "name": "Brothers Grimm",
+      "level1": "The first time each round you take a Good or Bad card, gain 1 coin.",
       "cost2": 2,
-      "level2": "Ottieni 1 XP per ogni coppia Good–Bad che possiedi, massimo 5 XP.",
+      "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
       "cost3": 4,
-      "level3": "3 PV per ogni coppia Good–Bad. Massimo 15 PV."
+      "level3": "3 VP for each Good–Bad pair. Maximum 15 VP."
     },
     {
       "id": "W3",
       "name": "Hans Christian Andersen",
-      "level1": "La prima volta nel round che scarti una carta o un Oggetto, ottieni 1 XP.",
+      "level1": "The first time each round you discard a card or Item, gain 1 XP.",
       "cost2": 2,
-      "level2": "Puoi scartare fino a due tue carte: ottieni 2 monete e 2 XP per ciascuna.",
+      "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
       "cost3": 4,
-      "level3": "2 PV per ogni carta con effetto Game End. Massimo 14 PV."
+      "level3": "2 VP for each card with a Game End effect. Maximum 14 VP."
     },
     {
       "id": "W4",
       "name": "Carlo Collodi",
-      "level1": "Le tue Carte Azione di valore 1–5 valgono +1 per determinare l’ordine.",
+      "level1": "Your Action cards with values 1–5 count as +1 when determining turn order.",
       "cost2": 2,
-      "level2": "Riprendi in mano una Carta Azione già giocata, poi scartane una dalla mano.",
+      "level2": "Return a played Action card to your hand, then discard one card from your hand.",
       "cost3": 4,
-      "level3": "1 PV ogni 2 monete rimaste e 1 PV ogni 2 XP rimasti. Massimo 14 PV."
+      "level3": "1 VP for every 2 coins remaining and 1 VP for every 2 XP remaining. Maximum 14 VP."
     },
     {
       "id": "W5",
       "name": "Lewis Carroll",
-      "level1": "La prima Activation del round produce 1 moneta aggiuntiva.",
+      "level1": "The first Activation each round produces 1 additional coin.",
       "cost2": 2,
-      "level2": "Attiva immediatamente fino a due carte differenti.",
+      "level2": "Immediately activate up to two different cards.",
       "cost3": 4,
-      "level3": "2 PV per ogni carta con Activation. Massimo 14 PV."
+      "level3": "2 VP for each card with Activation. Maximum 14 VP."
     },
     {
       "id": "W6",
       "name": "J. M. Barrie",
-      "level1": "Quando vinci l’ordine con una Carta Azione di valore 1–7, ottieni 1 XP.",
+      "level1": "When you win turn order with an Action card valued 1–7, gain 1 XP.",
       "cost2": 2,
-      "level2": "Guarda le prime tre carte Normal, prendine una e scarta le altre.",
+      "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 4,
-      "level3": "2 PV per ogni icona Astuzia. Massimo 14 PV."
+      "level3": "2 VP for each Dexterity icon. Maximum 14 VP."
     },
     {
       "id": "W7",
       "name": "L. Frank Baum",
-      "level1": "Quando completi un set delle quattro icone, ottieni immediatamente 1 moneta. Ogni set può attivarlo una sola volta.",
+      "level1": "When you complete a set of all four icons, immediately gain 1 coin. Each set can trigger this only once.",
       "cost2": 2,
-      "level2": "Scegli un tipo di icona: ottieni due segnalini di quel tipo.",
+      "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 4,
-      "level3": "5 PV per ogni set completo delle quattro icone. Massimo 15 PV."
+      "level3": "5 VP for each complete set of all four icons. Maximum 15 VP."
     },
     {
       "id": "W8",
       "name": "Leprince de Beaumont",
-      "level1": "I tuoi potenziamenti Legendary costano 1 XP in meno.",
+      "level1": "Your Legendary upgrades cost 1 fewer XP.",
       "cost2": 2,
-      "level2": "Potenzia gratuitamente una Legendary.",
+      "level2": "Upgrade one Legendary card for free.",
       "cost3": 4,
-      "level3": "4 PV per ogni Legendary potenziata. Massimo 16 PV."
+      "level3": "4 VP for each upgraded Legendary card. Maximum 16 VP."
     }
   ],
   "board2p": [

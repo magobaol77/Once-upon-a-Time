@@ -16,7 +16,7 @@ const ICON_FILES = {
   activation: "assets/icons/Effect type - Activation.png",
   endgame: "assets/icons/Effect type - Endgame.png",
 };
-const ICON_LABELS = { Charm: "Charm", Strength: "Forza", Dexterity: "Astuzia", Intelligence: "Intelligenza" };
+const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const state = {
   round: 0,
@@ -153,7 +153,7 @@ function newGame() {
   refillActionHand();
   startRound();
   state.phase = "writerMode";
-  log("Scegli come assegnare lo Scrittore.");
+  log("Choose how to assign your Writer.");
   render();
 }
 
@@ -192,12 +192,12 @@ function playAction(action) {
   state.playerFirst = actionValue >= state.botNumber;
   if (!state.playerFirst) {
     botTakeBestGroup();
-    log(`L'avversario ha giocato ${state.botNumber}, agisce prima e prende il gruppo migliore.`);
+    log(`The opponent played ${state.botNumber}, acts first, and takes the best group.`);
   } else {
-    log(`L'avversario ha giocato ${state.botNumber}. Scegli per primo.`);
+    log(`The opponent played ${state.botNumber}. You choose first.`);
   }
   state.phase = "chooseGroup";
-  log(`Giochi ${action.number}${writerBonus ? " (+1 Collodi)" : ""}. Ora scegli e acquisisci un gruppo.`);
+  log(`You play ${action.number}${writerBonus ? " (+1 Collodi)" : ""}. Now choose and take a group.`);
   render();
 }
 
@@ -206,7 +206,7 @@ function activateActionStep() {
   resolveAction(state.currentAction.effect);
   if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 7 && state.playerFirst) gain("xp", 1);
   state.phase = "roundDone";
-  log("Effetto della Carta Azione risolto.");
+  log("Action card effect resolved.");
   render();
 }
 
@@ -238,10 +238,10 @@ function takeGroup(groupId) {
   }
   applyWriterAfterGroup(group.cards);
   checkBaumSets();
-  log(`Prendi ${group.cards.map((card) => card.name).join(", ")}.`);
+  log(`You take ${group.cards.map((card) => card.name).join(", ")}.`);
   if (state.playerFirst) botTakeBestGroup();
   state.phase = "buyItem";
-  log("Ora puoi acquistare al massimo 1 Oggetto, poi risolvere l'effetto della Carta Azione.");
+  log("You may now buy up to 1 Item, then resolve the Action card effect.");
   render();
 }
 
@@ -275,7 +275,7 @@ function buyItem(itemId) {
   applyInstant(item);
   triggerOnTakeItem();
   checkBaumSets();
-  log(`Compri ${item.name} per ${price} monete${discount ? ` (sconto ${discount})` : ""}.`);
+  log(`You buy ${item.name} for ${price} coin${price === 1 ? "" : "s"}${discount ? ` (${discount} discount)` : ""}.`);
   render();
 }
 
@@ -288,17 +288,17 @@ function takeQuest(questId) {
   state.questChoices -= 1;
   const questRewardCards = state.tableau.filter((card) => /whenever you take a Quest, gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
-  log(`Prendi la Quest ${quest.name}.`);
+  log(`You take the Quest ${quest.name}.`);
   render();
 }
 
 function grantQuestChoice(source) {
   if (!state.questDisplay.length) {
-    log(`${source} concede una Quest, ma il display e vuoto.`);
+    log(`${source} grants a Quest, but the display is empty.`);
     return;
   }
   state.questChoices += 1;
-  log(`${source}: scegli 1 Quest dal display.`);
+  log(`${source}: choose 1 Quest from the display.`);
 }
 
 function upgradeLegendary(cardId) {
@@ -315,7 +315,7 @@ function upgradeLegendary(cardId) {
   card.upgraded = true;
   applyUpgradeGain(card);
   if (/take 1 Quest/i.test(card.upgrade || "")) grantQuestChoice(card.name);
-  log(`${card.name} viene potenziata.`);
+  log(`${card.name} is upgraded.`);
   render();
 }
 
@@ -324,7 +324,7 @@ function chooseWriter(writerId) {
   if (!writer || state.writer) return;
   state.writer = clone(writer);
   state.phase = "chooseAction";
-  log(`Hai scelto ${writer.name}.`);
+  log(`You chose ${writer.name}.`);
   render();
 }
 
@@ -334,8 +334,8 @@ function chooseWriterMode(mode) {
     const writers = DATA.writers || [];
     state.writer = writers.length ? clone(writers[Math.floor(Math.random() * writers.length)]) : null;
     state.phase = "chooseAction";
-    log(state.writer ? `Ti è stato assegnato casualmente ${state.writer.name}.` : "Nessuno Scrittore disponibile.");
-    log("Scegli una Carta Azione dalla tua mano.");
+    log(state.writer ? `${state.writer.name} was randomly assigned to you.` : "No Writer available.");
+    log("Choose an Action card from your hand.");
   } else {
     state.phase = "chooseWriter";
   }
@@ -349,7 +349,7 @@ function upgradeWriter() {
   if (state.xp < cost) return;
   state.xp -= cost;
   state.writerLevel = nextLevel;
-  log(`${state.writer.name} raggiunge il livello ${nextLevel}.`);
+  log(`${state.writer.name} reaches level ${nextLevel}.`);
   if (nextLevel === 2) resolveWriterInstant();
   render();
 }
@@ -358,12 +358,12 @@ function resolveWriterInstant() {
   const name = state.writer.name;
   if (name === "Charles Perrault") {
     state.writerItemDiscount = 2;
-    log("Perrault: il prossimo Oggetto costa 2 monete in meno.");
-  } else if (name === "Fratelli Grimm") {
+    log("Perrault: your next Item costs 2 fewer coins.");
+  } else if (name === "Brothers Grimm") {
     gain("xp", Math.min(5, Math.min(countAlignment("Good"), countAlignment("Bad"))));
   } else if (name === "Hans Christian Andersen") {
     state.writerDiscardRemaining = 2;
-    log("Andersen: puoi scartare fino a due carte dal tableau.");
+    log("Andersen: you may discard up to two cards from your tableau.");
   } else if (name === "Carlo Collodi") {
     const recovered = state.actionDiscard.pop();
     if (recovered) {
@@ -377,7 +377,7 @@ function resolveWriterInstant() {
   } else if (name === "Lewis Carroll") {
     const cards = [...state.tableau, ...state.items].filter((card) => /Activation/i.test(`${card.effect || ""} ${card.base || ""}`)).slice(0, 2);
     cards.forEach(activateCard);
-    log(`Carroll attiva ${cards.length} carte.`);
+    log(`Carroll activates ${cards.length} card${cards.length === 1 ? "" : "s"}.`);
   } else if (name === "J. M. Barrie") {
     state.writerDraftChoices = draw("common", 3);
   } else if (name === "L. Frank Baum") {
@@ -425,7 +425,7 @@ function finishWriterDiscard() {
 }
 
 function applyWriterAfterGroup(cards) {
-  if (state.writer?.name !== "Fratelli Grimm" || state.writerRound.alignmentRewarded) return;
+  if (state.writer?.name !== "Brothers Grimm" || state.writerRound.alignmentRewarded) return;
   if (cards.some((card) => card.alignment === "Good" || card.alignment === "Bad")) {
     gain("coins", 1);
     state.writerRound.alignmentRewarded = true;
@@ -449,7 +449,7 @@ function resolveAction(effect) {
   if (/1 Coin/i.test(text)) gain("coins", 1);
   if (/3 XP/i.test(text)) gain("xp", 3);
   else if (/1 XP/i.test(text)) gain("xp", 1);
-  if (/Quest/i.test(text)) grantQuestChoice("Carta Azione");
+  if (/Quest/i.test(text)) grantQuestChoice("Action card");
   if (/Activate all/i.test(text)) activateAll();
   if (/Activate a single/i.test(text)) activateOne();
   if (/Free level up 2/i.test(text)) state.freeUpgrades += 2;
@@ -498,7 +498,7 @@ function activateAll() {
     /Activation/i.test(`${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`),
   );
   for (const card of cards) activateCard(card);
-  log(`Attivi ${cards.length} carte.`);
+  log(`You activate ${cards.length} card${cards.length === 1 ? "" : "s"}.`);
 }
 
 function activateOne() {
@@ -507,7 +507,7 @@ function activateOne() {
   );
   if (card) {
     activateCard(card);
-    log(`Attivi ${card.name}.`);
+    log(`You activate ${card.name}.`);
   }
 }
 
@@ -515,19 +515,19 @@ function activateCard(card) {
   const text = `${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`;
   const hasActivationCost = /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) {
-    log(`${card.name}: non hai monete sufficienti per usare l'effetto opzionale.`);
+    log(`${card.name}: you do not have enough coins to use the optional effect.`);
     return;
   }
   if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1) {
-    log(`${card.name}: non hai XP sufficienti per usare l'effetto opzionale.`);
+    log(`${card.name}: you do not have enough XP to use the optional effect.`);
     return;
   }
   if (/spend 3 coins to level up/i.test(text) && state.coins < 3) {
-    log(`${card.name}: non hai monete sufficienti per usare l'effetto opzionale.`);
+    log(`${card.name}: you do not have enough coins to use the optional effect.`);
     return;
   }
-  if (hasActivationCost && !window.confirm(`${card.name}: questa Attivazione ha un costo. Vuoi usarla?`)) {
-    log(`Hai scelto di non usare l'effetto di ${card.name}.`);
+  if (hasActivationCost && !window.confirm(`${card.name}: this Activation has a cost. Do you want to use it?`)) {
+    log(`You chose not to use ${card.name}'s effect.`);
     return;
   }
   if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
@@ -537,7 +537,7 @@ function activateCard(card) {
       gain("coins", 1);
       state.writerRound.activationRewarded = true;
     }
-    log("The Merry Men: spendi 1 moneta e ottieni 1 XP.");
+    log("The Merry Men: spend 1 coin and gain 1 XP.");
     return;
   }
   if (/spend 1 XP to gain 3 coins/i.test(text)) {
@@ -547,7 +547,7 @@ function activateCard(card) {
   if (/spend 3 coins to level up/i.test(text)) {
     state.coins -= 3;
     state.freeUpgrades += 1;
-    log(`${card.name}: spendi 3 monete e ottieni un potenziamento gratuito.`);
+    log(`${card.name}: spend 3 coins and gain one free upgrade.`);
     return;
   }
   if (/gain 2 XP/i.test(text)) gain("xp", 2);
@@ -634,26 +634,26 @@ function scoreQuest(quest) {
   const completeSets = Math.min(...ICONS.map((icon) => icons[icon]));
   const upgraded = state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length;
   const name = quest.name;
-  if (/Ballo/.test(name)) return Math.min(14, icons.Charm * 2);
-  if (/Uncino/.test(name)) return Math.min(14, icons.Strength * 2);
-  if (/Tana/.test(name)) return Math.min(14, icons.Dexterity * 2);
-  if (/Voce/.test(name)) return Math.min(14, icons.Intelligence * 2);
-  if (/Scarpetta/.test(name)) return Math.min(15, completeSets * 5);
-  if (/Isola/.test(name)) return completeSets >= 3 ? 12 : completeSets >= 2 ? 8 : 0;
-  if (/Mela/.test(name)) return Math.min(14, countAlignment("Bad") * 2);
-  if (/Risveglio/.test(name)) return Math.min(12, countAlignment("Good"));
-  if (/Regina/.test(name)) return Math.min(15, countAlignment("Neutral") * 3);
-  if (/Casa/.test(name)) return Math.min(12, state.tableau.length);
-  if (/Tridente/.test(name)) return Math.min(14, state.items.length * 2);
-  if (/Cappellaio/.test(name)) return Math.min(15, countCardsWith("Ongoing") * 3);
-  if (/Seconda/.test(name)) return Math.min(14, countCardsWith("Activation") * 2);
-  if (/Bestia/.test(name)) return Math.min(15, upgraded * 5);
-  if (/Rosa/.test(name)) return Math.min(15, countCardsWith("less XP|free") * 3);
-  if (/Ricchi/.test(name)) return Math.min(12, Math.floor(state.coins / 2));
-  if (/Lampada/.test(name)) return Math.min(12, Math.floor(state.xp / 2));
-  if (/Freccia/.test(name)) return Math.min(15, countCardsWith("VP|Game End") * 3);
-  if (/Desiderio/.test(name)) return Math.min(15, Math.max(0, state.quests.length - 1) * 5);
-  if (/Volta/.test(name)) {
+  if (/Midnight Ball/.test(name)) return Math.min(14, icons.Charm * 2);
+  if (/Hook/.test(name)) return Math.min(14, icons.Strength * 2);
+  if (/Rabbit Hole/.test(name)) return Math.min(14, icons.Dexterity * 2);
+  if (/Lost Voice/.test(name)) return Math.min(14, icons.Intelligence * 2);
+  if (/Glass Slipper/.test(name)) return Math.min(15, completeSets * 5);
+  if (/Neverland/.test(name)) return completeSets >= 3 ? 12 : completeSets >= 2 ? 8 : 0;
+  if (/Apple's Bite/.test(name)) return Math.min(14, countAlignment("Bad") * 2);
+  if (/Forest Awakening/.test(name)) return Math.min(12, countAlignment("Good"));
+  if (/Queen's Command/.test(name)) return Math.min(15, countAlignment("Neutral") * 3);
+  if (/House of Seven/.test(name)) return Math.min(12, state.tableau.length);
+  if (/King's Trident/.test(name)) return Math.min(14, state.items.length * 2);
+  if (/Hatter's Tea Party/.test(name)) return Math.min(15, countCardsWith("Ongoing") * 3);
+  if (/Second Star/.test(name)) return Math.min(14, countCardsWith("Activation") * 2);
+  if (/Pact with the Beast/.test(name)) return Math.min(15, upgraded * 5);
+  if (/Enchanted Rose/.test(name)) return Math.min(15, countCardsWith("less XP|free") * 3);
+  if (/Rob the Rich/.test(name)) return Math.min(12, Math.floor(state.coins / 2));
+  if (/Rubbed Lamp/.test(name)) return Math.min(12, Math.floor(state.xp / 2));
+  if (/Arrow on Target/.test(name)) return Math.min(15, countCardsWith("VP|Game End") * 3);
+  if (/Final Wish/.test(name)) return Math.min(15, Math.max(0, state.quests.length - 1) * 5);
+  if (/Once Upon a Time/.test(name)) {
     const categories = [
       countAlignment("Good"),
       countAlignment("Bad"),
@@ -677,7 +677,7 @@ function scoreWriter() {
   if (!state.writer || state.writerLevel < 3) return 0;
   const name = state.writer.name;
   if (name === "Charles Perrault") return Math.min(14, state.items.length * 2);
-  if (name === "Fratelli Grimm") return Math.min(15, Math.min(countAlignment("Good"), countAlignment("Bad")) * 3);
+  if (name === "Brothers Grimm") return Math.min(15, Math.min(countAlignment("Good"), countAlignment("Bad")) * 3);
   if (name === "Hans Christian Andersen") return Math.min(14, countCardsWith("Game End") * 2);
   if (name === "Carlo Collodi") return Math.min(14, Math.floor(state.coins / 2) + Math.floor(state.xp / 2));
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
@@ -704,36 +704,36 @@ function renderStats() {
   const icons = iconCounts();
   el.stats.innerHTML = [
     ["Round", state.round],
-    [resourceIcon("coins", "Monete"), state.coins],
+    [resourceIcon("coins", "Coins"), state.coins],
     [resourceIcon("xp", "XP"), state.xp],
-    [resourceIcon("vp", "PV"), state.vp],
+    [resourceIcon("vp", "VP"), state.vp],
     ["Quest", state.quests.length],
     ["Free up", state.freeUpgrades],
   ]
     .map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`)
     .join("");
   el.phaseText.textContent = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0
-    ? "Perrault: acquista immediatamente un Oggetto pagando 2 monete in meno."
+    ? "Perrault: immediately buy an Item for 2 fewer coins."
     : state.gameOver
-    ? "Partita finita. Calcola il punteggio finale."
+    ? "Game over. Calculate the final score."
     : state.phase === "writerMode"
-      ? "Scegli se estrarre o selezionare lo Scrittore."
+      ? "Choose whether to draw or select your Writer."
       : state.phase === "chooseWriter"
-      ? "Scegli uno Scrittore per iniziare la partita."
+      ? "Choose a Writer to start the game."
       : state.phase === "chooseAction"
-      ? "Scegli una Carta Azione. L'avversario tirerà un numero da 1 a 15."
+      ? "Choose an Action card. The opponent will roll a number from 1 to 15."
       : state.phase === "buyItem"
-        ? "Puoi acquistare al massimo 1 Oggetto, poi risolvi l'effetto della Carta Azione."
+        ? "You may buy up to 1 Item, then resolve the Action card effect."
       : state.phase === "chooseGroup"
-        ? "Scegli e acquisisci un gruppo disponibile."
+        ? "Choose and take an available group."
         : state.questChoices > 0
-          ? `Scegli ${state.questChoices} Quest dal display per risolvere l'effetto.`
-          : "Round completato. Puoi potenziare le carte Leggendarie o chiudere il round.";
+          ? `Choose ${state.questChoices} Quest from the display to resolve the effect.`
+          : "Round complete. You may upgrade Legendary cards or end the round.";
   el.tableauSummary.innerHTML = [
     ...ICONS.map((icon) => [resourceIcon(icon, ICON_LABELS[icon]), icons[icon]]),
-    [resourceIcon("Good", "Buono"), countAlignment("Good")],
-    [resourceIcon("Bad", "Cattivo"), countAlignment("Bad")],
-    ["Oggetti", state.items.length],
+    [resourceIcon("Good", "Good"), countAlignment("Good")],
+    [resourceIcon("Bad", "Bad"), countAlignment("Bad")],
+    ["Items", state.items.length],
     ["Upgrade", state.tableau.filter((card) => card.upgraded).length],
   ]
     .map(([label, value]) => `<div class="summary-cell"><span class="label">${label}</span><strong>${value}</strong></div>`)
@@ -777,7 +777,7 @@ function renderQuest(quest) {
       <div class="card-title">${quest.name}</div>
       <div class="meta">${quest.theme}</div>
       <div class="effect">${formatGameText(quest.scoring)}</div>
-      <button type="button" ${state.questChoices <= 0 ? "disabled" : ""} data-quest="${quest.id}">${state.questChoices > 0 ? "Scegli Quest" : "Serve un effetto Quest"}</button>
+      <button type="button" ${state.questChoices <= 0 ? "disabled" : ""} data-quest="${quest.id}">${state.questChoices > 0 ? "Choose Quest" : "Requires a Quest effect"}</button>
     </div>
   `;
 }
@@ -790,11 +790,11 @@ function renderItem(item) {
   const canBuy = perraultPurchase || (state.phase === "buyItem" && !state.writerRound.itemBought);
   return `
     <div class="card">
-      <div class="item-heading"><span class="item-cost">${price} ${resourceIcon("coins", "monete")}</span><div class="card-title">${item.name}</div></div>
+      <div class="item-heading"><span class="item-cost">${price} ${resourceIcon("coins", "coins")}</span><div class="card-title">${item.name}</div></div>
       ${renderTags(item)}
-      ${discount ? `<div class="meta item-original-cost"><s>${item.cost}</s> monete</div>` : ""}
+      ${discount ? `<div class="meta item-original-cost"><s>${item.cost}</s> coins</div>` : ""}
       <div class="effect">${formatGameText(item.effect)}</div>
-      <button type="button" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">Compra</button>
+      <button type="button" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">Buy</button>
     </div>
   `;
 }
@@ -804,9 +804,9 @@ function renderGroups() {
     .map(
       (group) => `
         <div class="group ${group.removedByBot ? "removed" : ""}" style="--group-width: ${group.cards.length === 1 ? 179 : group.cards.length === 2 ? 260 : 550}px">
-          <h3>${group.id}${group.removedByBot ? " - preso dall'avversario" : group.taken ? " - preso" : ""}</h3>
+          <h3>${group.id}${group.removedByBot ? " - taken by opponent" : group.taken ? " - taken" : ""}</h3>
           <div class="group-cards">${group.cards.map(renderCard).join("")}</div>
-          <button type="button" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">Prendi gruppo</button>
+          <button type="button" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">Take group</button>
         </div>
       `,
     )
@@ -823,17 +823,17 @@ function renderTableau() {
     ...state.quests.map((card) => ({ ...card, zone: "Quest" })),
   ];
   const sections = [
-    { title: "Attivazioni", test: (card) => /Activation:/i.test(activeCardText(card)) },
-    { title: "Effetti Ongoing", test: (card) => /Ongoing:/i.test(activeCardText(card)) },
-    { title: "Istantanee", test: (card) => /Instant:/i.test(activeCardText(card)) && !/Game End:/i.test(activeCardText(card)) },
-    { title: "Altre carte", test: () => true },
+    { title: "Activations", test: (card) => /Activation:/i.test(activeCardText(card)) },
+    { title: "Ongoing Effects", test: (card) => /Ongoing:/i.test(activeCardText(card)) },
+    { title: "Instant Effects", test: (card) => /Instant:/i.test(activeCardText(card)) && !/Game End:/i.test(activeCardText(card)) },
+    { title: "Other Cards", test: () => true },
   ];
   const remaining = [...cards];
   el.tableau.innerHTML = sections.map((section) => {
     const selected = remaining.filter(section.test);
     for (const card of selected) remaining.splice(remaining.indexOf(card), 1);
     if (!selected.length) return "";
-    return `<section class="tableau-section"><h3>${section.title} <span>${selected.length}</span></h3><div class="tableau-section-cards">${selected.map((card) => section.title === "Istantanee" ? renderCompactOwnedCard(card) : renderOwnedCard(card)).join("")}</div></section>`;
+    return `<section class="tableau-section"><h3>${section.title} <span>${selected.length}</span></h3><div class="tableau-section-cards">${selected.map((card) => section.title === "Instant Effects" ? renderCompactOwnedCard(card) : renderOwnedCard(card)).join("")}</div></section>`;
   }).join("");
 }
 
@@ -845,8 +845,8 @@ function renderCompactOwnedCard(card) {
   const canUpgrade = card.deck === "legendary" && !card.upgraded && (state.xp >= upgradeCost(card) || state.freeUpgrades > 0);
   return `<div class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
     <strong>${card.name}${card.upgraded ? " +" : ""}</strong>${renderTags(card)}
-    ${card.deck === "legendary" ? `<details><summary>Effetti e upgrade</summary>${renderLegendaryEffects(card)}</details><button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
-    ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Scarta: +2 ${resourceIcon("coins", "monete")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
+    ${card.deck === "legendary" ? `<details><summary>Effects and upgrade</summary>${renderLegendaryEffects(card)}</details><button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
+    ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Discard: +2 ${resourceIcon("coins", "coins")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
   </div>`;
 }
 
@@ -862,7 +862,7 @@ function renderOwnedCard(card) {
       <div class="meta">${card.alignment || card.rank || card.zone}</div>
       ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(card.effect)}</div>`}
       ${card.deck === "legendary" ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
-      ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Scarta: +2 ${resourceIcon("coins", "monete")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
+      ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Discard: +2 ${resourceIcon("coins", "coins")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
     </div>
   `;
 }
@@ -900,7 +900,7 @@ function renderTags(card) {
     for (let i = 0; i < count; i += 1) tags.push(`<span class="tag icon-tag">${resourceIcon(icon, ICON_LABELS[icon])}</span>`);
   }
   if (card.alignment === "Good" || card.alignment === "Bad") {
-    tags.push(`<span class="tag icon-tag alignment-icon">${resourceIcon(card.alignment, card.alignment === "Good" ? "Buono" : "Cattivo")}</span>`);
+    tags.push(`<span class="tag icon-tag alignment-icon">${resourceIcon(card.alignment, card.alignment)}</span>`);
   } else if (card.alignment) {
     tags.push(`<span class="tag ${card.alignment.toLowerCase()}">${card.alignment}</span>`);
   }
@@ -912,18 +912,18 @@ function renderRound() {
   el.botAction.textContent = state.botNumber || "-";
   el.roundState.textContent =
     state.phase === "writerMode"
-      ? "Inizia partita"
+      ? "Start game"
       : state.phase === "chooseWriter"
-      ? "Scegli Scrittore"
+      ? "Choose Writer"
       : state.phase === "chooseAction"
-      ? "Scegli azione"
+      ? "Choose Action"
       : state.phase === "buyItem"
-        ? "Acquista o passa all'effetto"
+        ? "Buy or resolve effect"
       : state.phase === "chooseGroup"
-        ? "Acquisisci gruppo"
+        ? "Take group"
         : state.phase === "gameOver"
-          ? "Fine partita"
-          : "Round risolto";
+          ? "Game over"
+          : "Round resolved";
   el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0;
   el.resolveActionBtn.disabled = state.phase !== "buyItem";
   el.resolveActionBtn.classList.toggle("hidden", state.phase !== "buyItem");
@@ -943,10 +943,10 @@ function showScore() {
   const score = finalScore();
   el.scorePanel.classList.remove("hidden");
   el.scorePanel.innerHTML = `
-    <h2>Punteggio Finale</h2>
-    <p>Totale: <strong>${score.total} ${resourceIcon("vp", "PV")}</strong> (${score.base} PV durante la partita + ${score.questTotal} PV da Quest + ${score.writerTotal} PV dallo Scrittore)</p>
+    <h2>Final Score</h2>
+    <p>Total: <strong>${score.total} ${resourceIcon("vp", "VP")}</strong> (${score.base} VP during the game + ${score.questTotal} VP from Quests + ${score.writerTotal} VP from the Writer)</p>
     <table class="score-table">
-      <thead><tr><th>Quest</th><th>Scoring</th><th>PV</th></tr></thead>
+      <thead><tr><th>Quest</th><th>Scoring</th><th>VP</th></tr></thead>
       <tbody>
         ${score.questScores
           .map((entry) => `<tr><td>${entry.quest.name}</td><td>${entry.quest.scoring}</td><td>${entry.points}</td></tr>`)
@@ -960,25 +960,25 @@ function renderWriter() {
   const writers = DATA.writers || [];
   const setupOpen = state.phase === "writerMode" || state.phase === "chooseWriter";
   el.writerSetup.classList.toggle("hidden", !setupOpen);
-  el.writerSetupTitle.textContent = state.phase === "writerMode" ? "Once Upon a Time" : "Scegli il tuo Scrittore";
+  el.writerSetupTitle.textContent = state.phase === "writerMode" ? "Once Upon a Time" : "Choose your Writer";
   el.writerChoices.className = state.phase === "writerMode" ? "main-menu" : "writer-choice-grid";
   el.writerChoices.innerHTML = state.phase === "writerMode"
     ? `<div class="main-menu-modes">
         <section class="menu-mode">
-          <h3>Partita in solitario</h3>
+          <h3>Solo game</h3>
           <div class="menu-mode-actions">
-            <button type="button" data-writer-mode="random">Inizia con Scrittore casuale</button>
-            <button type="button" data-writer-mode="choose">Scegli lo Scrittore</button>
+            <button type="button" data-writer-mode="random">Start with a random Writer</button>
+            <button type="button" data-writer-mode="choose">Choose your Writer</button>
           </div>
         </section>
         <section class="menu-mode menu-mode-future">
-          <h3>Partita multiplayer</h3>
-          <button type="button" disabled title="Modalità in preparazione">Inizia partita multiplayer</button>
-          <div class="multiplayer-preview"><span>2–5 giocatori</span><span>Giocatore / Automa</span></div>
+          <h3>Multiplayer game</h3>
+          <button type="button" disabled title="Mode in development">Start multiplayer game</button>
+          <div class="multiplayer-preview"><span>2–5 players</span><span>Player / Bot</span></div>
         </section>
       </div>
       <section class="menu-decks">
-        <h3>Mazzi completi</h3>
+        <h3>Complete decks</h3>
         <div class="menu-deck-buttons">
           ${DECK_CATALOG.map((deck) => `<button type="button" data-catalog="${deck.key}">${deck.label}<span>${DATA[deck.key].length}</span></button>`).join("")}
         </div>
@@ -1007,11 +1007,11 @@ function renderWriter() {
 }
 
 const DECK_CATALOG = [
-  { key: "common", label: "Comuni" },
-  { key: "legendary", label: "Leggendarie" },
+  { key: "common", label: "Common" },
+  { key: "legendary", label: "Legendary" },
   { key: "quests", label: "Quest" },
-  { key: "items", label: "Equipaggiamenti" },
-  { key: "writers", label: "Scrittori" },
+  { key: "items", label: "Items" },
+  { key: "writers", label: "Writers" },
 ];
 
 function openCatalog(key) {
@@ -1024,7 +1024,7 @@ function openCatalog(key) {
   el.deckCatalogCards.innerHTML = DATA[key].map((card) => {
     if (key === "writers") return renderWriterCard(card, 1, false, true);
     if (key === "quests") return `<article class="card"><div class="card-title">${card.name}</div><div class="meta">${card.theme}</div><div class="effect">${formatGameText(card.scoring)}</div></article>`;
-    if (key === "items") return `<article class="card"><div class="item-heading"><span class="item-cost">${card.cost} ${resourceIcon("coins", "monete")}</span><div class="card-title">${card.name}</div></div>${renderTags(card)}<div class="effect">${formatGameText(card.effect)}</div></article>`;
+    if (key === "items") return `<article class="card"><div class="item-heading"><span class="item-cost">${card.cost} ${resourceIcon("coins", "coins")}</span><div class="card-title">${card.name}</div></div>${renderTags(card)}<div class="effect">${formatGameText(card.effect)}</div></article>`;
     return renderCard(card);
   }).join("");
   el.deckCatalog.classList.remove("hidden");
@@ -1051,18 +1051,18 @@ function renderWriterCard(writer, level, selectable, preview = false) {
     <article class="writer-card">
       <div class="writer-card-header">
         <div class="writer-name">${writer.name}</div>
-        <div class="writer-level">${selectable || preview ? "Scrittore" : `Livello ${level}`}</div>
+        <div class="writer-level">${selectable || preview ? "Writer" : `Level ${level}`}</div>
       </div>
       <div class="writer-effect-icons">
         ${levels.map((entry) => `<div class="writer-effect-icon">${resourceIcon(entry.type, effectLabel(entry.type))}<span>Lv ${entry.number}</span></div>`).join("")}
       </div>
       <div class="writer-levels">
-        ${levels.map((entry) => `<div class="writer-level-box ${!selectable && !preview && entry.number > level ? "locked" : ""}"><strong>Livello ${entry.number}${entry.cost ? ` · ${entry.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(entry.text)}</div>`).join("")}
+        ${levels.map((entry) => `<div class="writer-level-box ${!selectable && !preview && entry.number > level ? "locked" : ""}"><strong>Level ${entry.number}${entry.cost ? ` · ${entry.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(entry.text)}</div>`).join("")}
       </div>
       ${state.writerDraftChoices.length && !selectable ? `<div class="writer-draft">${state.writerDraftChoices.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : choice.name}</button>`).join("")}</div>` : ""}
       ${preview ? "" : `<div class="writer-card-actions">
-        ${selectable ? `<button type="button" data-writer="${writer.id}">Scegli</button>` : level < 3 ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>Livello ${nextLevel} (${nextCost} ${resourceIcon("xp", "XP")})</button>` : ""}
-        ${state.writerDiscardRemaining > 0 && !selectable ? `<button type="button" data-finish-writer-discard>Termina scarti</button>` : ""}
+        ${selectable ? `<button type="button" data-writer="${writer.id}">Choose</button>` : level < 3 ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>Level ${nextLevel} (${nextCost} ${resourceIcon("xp", "XP")})</button>` : ""}
+        ${state.writerDiscardRemaining > 0 && !selectable ? `<button type="button" data-finish-writer-discard>Finish discarding</button>` : ""}
       </div>`}
     </article>
   `;
@@ -1082,13 +1082,13 @@ function formatGameText(text) {
     .replace(/\bOngoing\b/gi, resourceIcon("ongoing", "Ongoing"))
     .replace(/\bInstant\b/gi, resourceIcon("instant", "Instant"))
     .replace(/\bActivation\b/gi, resourceIcon("activation", "Activation"))
-    .replace(/\bStrength\b/gi, resourceIcon("Strength", "Forza"))
-    .replace(/\b(?:Dexterity|Ruse)\b/gi, resourceIcon("Dexterity", "Astuzia"))
-    .replace(/\bIntelligence\b/gi, resourceIcon("Intelligence", "Intelligenza"))
+    .replace(/\bStrength\b/gi, resourceIcon("Strength", "Strength"))
+    .replace(/\b(?:Dexterity|Ruse)\b/gi, resourceIcon("Dexterity", "Dexterity"))
+    .replace(/\bIntelligence\b/gi, resourceIcon("Intelligence", "Intelligence"))
     .replace(/\bCharm\b/gi, resourceIcon("Charm", "Charm"))
-    .replace(/\bVP\b/g, resourceIcon("vp", "PV"))
+    .replace(/\bVP\b/g, resourceIcon("vp", "VP"))
     .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
-    .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Monete"))
+    .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
     .replace(/\bGoals?\b/gi, "Quest");
 }
 
